@@ -15,15 +15,32 @@ $(document).ready(function() {
         console.log(long);
         console.log(city);
 
+        var urlClima = ('https://api.darksky.net/forecast/adc03537205c5de8b363a69634ce248b/' + lat + ',' + long + '?exclude=minutely,hourly,flags&lang=es&units=auto');
+
         // si la data está ingresada, continuar con el código, de lo contrario, avisa al usuario
         if (lat && long !== '') {
             e.preventDefault();
         }
+
+        //acá quise tomar el val() del input pero entrega object-object :( 
+
+        $.getJSON(urlClima, function(data) {
+            var resumen = data.summary;
+            var icon = data.icon;
+            var temp = data.temperature;
+            var viento = data.windSpeed;
+            var humedad = data.humidity;
+            var uv = data.uvIndex;
+            var presion = data.pressure;
+            console.log(resumen);
+        });
+
+
+
+
+
+
     });
-
-
-
-
     // Funcion para conseguir datos desde la api de google maps
 
     function insertGoogleScript() {
@@ -47,24 +64,11 @@ $(document).ready(function() {
         });
     }
 
+
     insertGoogleScript();
 
-    //acá quise tomar el val() del input pero entrega object-object :( 
-
-    var urlClima = ('https://api.darksky.net/forecast/adc03537205c5de8b363a69634ce248b/' + lat + ',' + long + '?exclude=minutely,hourly,flags&lang=es&units=auto');
-
-    $.getJSON(urlClima, function(data) {
-        var resumen = data.summary;
-        var icon = data.icon;
-        var temp = data.temperature;
-        var viento = data.windSpeed;
-        var humedad = data.humidity;
-        var uv = data.uvIndex;
-        var presion = data.pressure;
-        console.log(resumen);
 
 
-    });
 
     var dibujaClima = '<div class="clima text-center">' +
         '<div class="row"><div class="col s12">' + icon + '</div>' +
@@ -80,4 +84,4 @@ $(document).ready(function() {
     $(".land").append(dibujarClima);
 
 
-})
+});
