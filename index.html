@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
-    <title>Weather</title>
+    <title>Dark-Weather</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Lato" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="dist/css/style.min.css" rel="stylesheet">
@@ -12,6 +14,41 @@
 
 <body>
 
+    <section class="land center-align">
+        <div class="row">
+            <div class="cbg col-s-12 show-on-small">
+                <div class="ico-logo"><img src="dist/img/sunnylogo.png" alt="logo" height="120"></div>
+
+                <div class="title">DARK WEATHER APP</div>
+                <form method="get" class="form">
+                    <fieldset>
+                        <legend>Puedes ingresar la ciudad para saber su geolocalización.</legend>
+                        <ul class="list-reset">
+                            <li class="form-field">
+                                <label for="city-search">Ciudad</label>
+                                <input type="text" id="city-search" placeholder="ej. Viña del Mar, Chile.">
+                            </li>
+
+                            <li class="form-field">
+                                <label for="latitude">Latitud</label>
+                                <input type="text" id="latitud" placeholder="ej. 42.9150747" required>
+                            </li>
+
+                            <li class="form-field">
+                                <label for="longitude">Longitud</label>
+                                <input type="text" id="longitud" placeholder="ej. -77.784323" required>
+                            </li>
+                        </ul>
+                    </fieldset>
+
+                    <button class="btn btn-success">Entrar</button>
+                </form>
+            </div>
+        </div>
+
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="dist/js/script.js"></script>
 </body>
 
 </html>

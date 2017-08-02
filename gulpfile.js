@@ -22,13 +22,13 @@ gulp.task('style', function() {
 });
 
 gulp.task('webserver', function() {
-    gulp.src('../gulpie/')
+    gulp.src('../dark-weather/')
         .pipe(webserver({
             fallback: 'index.html',
             livereload: true,
             directoryListing: false,
             open: true,
-            port: 8000
+            port: 7777
         }));
 });
 
