@@ -28,7 +28,7 @@ gulp.task('webserver', function() {
             livereload: true,
             directoryListing: false,
             open: true,
-            port: 7777
+            port: 8080
         }));
 });
 

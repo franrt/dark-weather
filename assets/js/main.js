@@ -1,41 +1,83 @@
-// Get Weather Button Event
-
-$('button').on('click', function(e) {
-    var lat = $('#latitude').val(),
-        long = $('#longitude').val(),
-        city_name = $('#city-search').val()
-
-    // If the latitude and longitude inputs aren't empty
-    // then continue with the code. Otherwise report error to user.
-    if (lat && long !== '') {
-        e.preventDefault();
-    }
-});
-
-// =================================================
-// Report City & AutoFill Coords
-// =================================================
-
-function insertGoogleScript() {
-    var google_api = document.createElement('script'),
-        api_key = 'AIzaSyBmkK6sZyEm-Jvo3tGG8ZKIi75Y9rQquME';
-
-    // Inject the script for Google's API and reference the initGoogleAPI
-    // function as a callback.
-    google_api.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initGoogleAPI&libraries=places,geometry';
-    document.body.appendChild(google_api);
-}
+$(document).ready(function() {
 
 
-// SearchBox Method
-function initGoogleAPI() {
-    var autocomplete = new google.maps.places.SearchBox(document.querySelector("#city-search"));
+    // Evento del botón, para conseguir la data de latitud y longitud
 
-    autocomplete.addListener('places_changed', function() {
-        var place = autocomplete.getPlaces()[0];
-        document.querySelector("#latitude").value = place.geometry.location.lat();
-        document.querySelector("#longitude").value = place.geometry.location.lng();
+    $('#btn-geo').click(function(e) {
+        console.log("okidoki");
+        $(".land").empty();
+
+        var lat = $('#latitud').val();
+        var long = $('#longitud').val();
+        var city = $('#city-search').val();
+
+        console.log(lat);
+        console.log(long);
+        console.log(city);
+
+        // si la data está ingresada, continuar con el código, de lo contrario, avisa al usuario
+        if (lat && long !== '') {
+            e.preventDefault();
+        }
     });
-}
 
-insertGoogleScript();
+
+
+
+    // Funcion para conseguir datos desde la api de google maps
+
+    function insertGoogleScript() {
+        var google_api = document.createElement('script'),
+            api_key = 'AIzaSyBmkK6sZyEm-Jvo3tGG8ZKIi75Y9rQquME';
+
+        //crea el script para obtener la api de google maps en el body
+        google_api.src = 'https://maps.googleapis.com/maps/api/js?key=' + api_key + '&callback=initGoogleAPI&libraries=places,geometry';
+        document.body.appendChild(google_api);
+    }
+
+
+    // Método de autocompletado automático de la ciudad y obtención de geolocalización
+    function initGoogleAPI() {
+        var autocomplete = new google.maps.places.SearchBox(document.querySelector("#city-search"));
+
+        autocomplete.addListener('places_changed', function() {
+            var place = autocomplete.getPlaces()[0];
+            document.querySelector("#latitud").value = place.geometry.location.lat();
+            document.querySelector("#longitud").value = place.geometry.location.lng();
+        });
+    }
+
+    insertGoogleScript();
+
+    //acá quise tomar el val() del input pero entrega object-object :( 
+
+    var urlClima = ('https://api.darksky.net/forecast/adc03537205c5de8b363a69634ce248b/' + lat + ',' + long + '?exclude=minutely,hourly,flags&lang=es&units=auto');
+
+    $.getJSON(urlClima, function(data) {
+        var resumen = data.summary;
+        var icon = data.icon;
+        var temp = data.temperature;
+        var viento = data.windSpeed;
+        var humedad = data.humidity;
+        var uv = data.uvIndex;
+        var presion = data.pressure;
+        console.log(resumen);
+
+
+    });
+
+    var dibujaClima = '<div class="clima text-center">' +
+        '<div class="row"><div class="col s12">' + icon + '</div>' +
+        '<div class="row"><div class="col s12">' + city + '</div>' +
+        '<div class="row"><div class="col s12">' + '<p>TEMPERATURA</p>' + temp + '</div>' +
+        '<div class="row"><div class="col s12">' + '<p>VIENTO</p>' + viento + '</div>' +
+        '<div class="row"><div class="col s12">' + '<p>HUMEDAD</p>' + humedad + '</div>' +
+        '<div class="row"><div class="col s12">' + '<p>ÍNDICE UV</p>' + uv + '</div>' +
+        '<div class="row"><div class="col s12">' + '<p>PRESION</p>' + presion + '</div></div>'
+
+
+
+    $(".land").append(dibujarClima);
+
+
+})
